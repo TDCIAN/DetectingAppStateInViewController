@@ -8,11 +8,21 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    private var observer: NSObjectProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemOrange
         print("ViewController - viewDidLoad")
+        
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
+                                                          object: nil,
+                                                          queue: .main) {
+                                                          [unowned self] notification in
+            print("ViewController - willEnterForegroundNotification")
+            view.backgroundColor = .systemGreen
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -22,7 +32,7 @@ class ViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("ViewController - viewWillAppear")
+        print("ViewController - viewDidAppear")
     }
 
     override func viewWillDisappear(_ animated: Bool) {
